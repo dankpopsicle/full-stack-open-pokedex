@@ -6,7 +6,7 @@ on:
       - master
   pull_request:
     branches: [ master ]
-    types: [opened, synchronize, closed]
+    types: [opened, synchronize]
 
 jobs: 
   simple_deployment_pipeline:
@@ -26,8 +26,8 @@ jobs:
           command: npm run test:e2e
           start: npm run start-prod
           wait-on: http://localhost:8080
-        if_merged:
-          if: github.event.pull_request.merged == true
+        if: ${{ github.event_name == 'push' }}
+        - echo: ${{ github.event_name }}
         - uses: superfly/flyctl-actions/setup-flyctl@master
         - run: flyctl deploy --remote-only
           env:
