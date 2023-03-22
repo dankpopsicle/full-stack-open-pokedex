@@ -26,8 +26,6 @@ jobs:
           command: npm run test:e2e
           start: npm run start-prod
           wait-on: http://localhost:8080
-        if: ${{ github.event_name == 'push' }}
-        - echo: ${{ github.event_name }}
         - uses: superfly/flyctl-actions/setup-flyctl@master
         - run: flyctl deploy --remote-only
           env:
